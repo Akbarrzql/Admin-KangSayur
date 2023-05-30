@@ -1,4 +1,5 @@
 import 'package:admin_kangsayur/common/color_value.dart';
+import 'package:admin_kangsayur/responsive/responsive.dart';
 import 'package:admin_kangsayur/ui/sidebar/sidebar_navigation.dart';
 import 'package:admin_kangsayur/ui/widget/textfield.dart';
 import 'package:flutter/material.dart';
@@ -155,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const SidebarNavigation(),
+          builder: (context) => const ResponsivePage(),
         ),
             (route) => false,
       );

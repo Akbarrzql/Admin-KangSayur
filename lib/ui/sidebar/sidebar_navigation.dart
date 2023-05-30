@@ -175,7 +175,11 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Keluar'),
+            title: Image.asset(
+              'assets/images/logout.png',
+              height: 150,
+              width: 150,
+            ),
             content: const Text('Apakah anda yakin ingin keluar?'),
             actions: [
               TextButton(
