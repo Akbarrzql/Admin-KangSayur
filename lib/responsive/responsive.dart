@@ -1,6 +1,8 @@
 import 'package:admin_kangsayur/ui/sidebar/sidebar_navigation.dart';
 import 'package:flutter/material.dart';
 
+import '../ui/sidebar/toko/detail_toko.dart';
+
 class ResponsivePage extends StatefulWidget {
   const ResponsivePage({Key? key}) : super(key: key);
 
