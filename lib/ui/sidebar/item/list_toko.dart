@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/color_value.dart';
+import '../toko/detail_toko.dart';
 
 class ListToko extends StatefulWidget {
   const ListToko({Key? key}) : super(key: key);
@@ -164,7 +165,7 @@ class _ListTokoState extends State<ListToko> {
                           ),
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.search,
                             color: ColorValue.neutralColor,
                           ),
@@ -175,19 +176,19 @@ class _ListTokoState extends State<ListToko> {
                                 searchToko(searchText);
                                 print("Cari Toko");
                               },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: ColorValue.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide.none,
+                                ),
+                              ),
                               child: Text(
                                 "Cari Toko",
                                 style: textTheme.bodyText1!.copyWith(
                                   color: Colors.white,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorValue.primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide.none,
                                 ),
                               ),
                             ),
@@ -199,21 +200,24 @@ class _ListTokoState extends State<ListToko> {
                     const SizedBox(height: 10),
                     ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: getCurrentPageItems().length,
                       itemBuilder: (context, index) {
                         String tokoName = getCurrentPageItems()[index];
 
-                        return InkWell(
-                          onTap: () {
-                            print("Toko $tokoName");
+                        return _listToko(
+                          tokoName,
+                          "assets/images/store.png",
+                          "Jl. $tokoName",
+                          "10",
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DetailTokoPage(),
+                              ),
+                            );
                           },
-                          child: _listToko(
-                            tokoName,
-                            "assets/images/store.png",
-                            "Jl. $tokoName",
-                            "10",
-                          ),
                         );
                       },
                     ),
@@ -225,6 +229,9 @@ class _ListTokoState extends State<ListToko> {
                           ElevatedButton(
                             onPressed: currentPage > 1 ? () => changePage(-1) : null,
                             child: const Icon(Icons.arrow_back),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: ColorValue.primaryColor,
+                            )
                           ),
                           const SizedBox(width: 10),
                           Text(
@@ -235,8 +242,10 @@ class _ListTokoState extends State<ListToko> {
                           ElevatedButton(
                             onPressed: currentPage < getPageCount() ? () => changePage(1) : null,
                             child: const Icon(Icons.arrow_forward),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: ColorValue.primaryColor,
+                              )
                           ),
-
                         ],
                       ),
                     ),
@@ -296,24 +305,28 @@ class _ListTokoState extends State<ListToko> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    name,
-                    style: textTheme.bodyText1!.copyWith(
-                      color: ColorValue.neutralColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
+                  Flexible(
+                    child: Text(
+                      name,
+                      style: textTheme.bodyText1!.copyWith(
+                        color: ColorValue.neutralColor,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.start,
                     ),
-                    textAlign: TextAlign.start,
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    total,
-                    style: textTheme.bodyText1!.copyWith(
-                      color: ColorValue.neutralColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                  Flexible(
+                    child: Text(
+                      total,
+                      style: textTheme.bodyText1!.copyWith(
+                        color: ColorValue.neutralColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.start,
                     ),
-                    textAlign: TextAlign.start,
                   ),
                 ],
               ),
@@ -324,46 +337,49 @@ class _ListTokoState extends State<ListToko> {
     );
   }
 
-  Widget _listToko(String name, String image, String address, String total){
+  Widget _listToko(String name, String image, String address, String total, VoidCallback onTap){
     final textTheme = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: Colors.white,
-        ),
-        child: ListTile(
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(image),
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: Colors.white,
+          ),
+          child: ListTile(
+              leading: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(image),
+                  ),
+                ),
               ),
-            ),
+              title: Text(
+                name,
+                style: textTheme.subtitle1!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                ),
+              ),
+              subtitle: Text(
+                address,
+                style: textTheme.subtitle2!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                ),
+              ),
+              trailing: IconButton(
+                onPressed: (){},
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+              )
           ),
-          title: Text(
-            name,
-            style: textTheme.subtitle1!.copyWith(
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
-            ),
-          ),
-          subtitle: Text(
-            address,
-            style: textTheme.subtitle2!.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-            ),
-          ),
-          trailing: IconButton(
-            onPressed: (){},
-            icon: Icon(
-              Icons.delete,
-              color: Colors.red,
-            ),
-          )
         ),
       ),
     );
