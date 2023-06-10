@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
               ),
             );
           } else {
-            return const ResponsivePage();
+            return const LoginPage();
           }
         },
       ),
