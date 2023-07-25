@@ -1,3 +1,4 @@
+import 'package:admin_kangsayur/ui/auth/login/login.dart';
 import 'package:admin_kangsayur/ui/sidebar/sidebar_navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class _ResponsivePageState extends State<ResponsivePage> {
             ),
           );
         } else {
-          return const SidebarNavigation();
+          return const LoginPage();
         }
       },
     );
