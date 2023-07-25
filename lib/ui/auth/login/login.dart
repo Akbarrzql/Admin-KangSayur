@@ -1,8 +1,14 @@
 import 'package:admin_kangsayur/common/color_value.dart';
 import 'package:admin_kangsayur/responsive/responsive.dart';
+import 'package:admin_kangsayur/ui/auth/bloc/login_bloc.dart';
+import 'package:admin_kangsayur/ui/auth/repository/login_repository.dart';
+import 'package:admin_kangsayur/ui/auth/state/login_state.dart';
 import 'package:admin_kangsayur/ui/sidebar/sidebar_navigation.dart';
 import 'package:admin_kangsayur/ui/widget/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../event/login_event.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,67 +26,83 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
-    return Scaffold(
-      body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/logo_kangsayur.png',
-                width: 150,
-                height: 150,
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Kang Sayur',
-                style: textTheme.subtitle1!.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24,
-                    color: ColorValue.neutralColor
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                child: textfield(context, "Masukkan Email", _emailController,
-                    TextInputType.emailAddress),
-              ),
-              const SizedBox(height: 10),
-              textFieldPassword(),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  checkLogin();
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: ColorValue.primaryColor,
-                  minimumSize: const Size(310, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  textStyle: textTheme.button!.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: Colors.white
-                  ),
-                ),
-                child: Text(
-                  "Masuk",
-                  style: textTheme.button!.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: Colors.white
-                  ),
-                ),
-              )
-            ],
-          )
+    final textTheme = Theme.of(context).textTheme;
+    return BlocProvider(
+      create: (context) => LoginPageBloc(loginRepository: LoginRepository()),
+      child: Scaffold(
+        body: BlocConsumer<LoginPageBloc, LoginPageState>(
+          listener: (context, state) {},
+          builder: (context, state){
+            if(state is InitialLoginPageState){
+              return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/logo_kangsayur.png',
+                        width: 150,
+                        height: 150,
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Kang Sayur',
+                        style: textTheme.subtitle1!.copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 24,
+                            color: ColorValue.neutralColor
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: 300,
+                        child: textfield(context, "Masukkan Email", _emailController,
+                            TextInputType.emailAddress),
+                      ),
+                      const SizedBox(height: 10),
+                      textFieldPassword(),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          checkLogin(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: ColorValue.primaryColor,
+                          minimumSize: const Size(310, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          textStyle: textTheme.button!.copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: Colors.white
+                          ),
+                        ),
+                        child: Text(
+                          "Masuk",
+                          style: textTheme.button!.copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: Colors.white
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+              );
+            } else if (state is LoginPageLoading){
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is LoginPageLoaded){
+              return const SidebarNavigation();
+            }else if(state is LoginPageError){
+              return const Center(child: Text("Terdapat kesalahan pada sistem"));
+            } else {
+              return const Center(child: Text("Terdapat kesalahan pada sistem"));
+            }
+          },
+        )
       ),
     );
   }
@@ -130,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void checkLogin() {
+  void checkLogin(BuildContext context) {
     if (_emailController.text.isEmpty && _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -151,21 +173,11 @@ class _LoginPageState extends State<LoginPage> {
           content: Text("Password tidak boleh kosong"),
         ),
       );
-    } else if (_emailController.text == "admin@gmail.com" &&
-        _passwordController.text == "password") {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ResponsivePage(),
-        ),
-            (route) => false,
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Email atau Password salah"),
-        ),
-      );
+    }else {
+      BlocProvider.of<LoginPageBloc>(context).add(LoginButtonPressed(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ));
     }
   }
 }
