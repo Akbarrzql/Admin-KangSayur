@@ -2,7 +2,7 @@ import 'package:admin_kangsayur/ui/auth/login/login.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/chat.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/dashboard.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/laporan_pengguna.dart';
-import 'package:admin_kangsayur/ui/sidebar/item/list_toko.dart';
+import 'package:admin_kangsayur/ui/sidebar/item/list_toko/list_toko.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/pengaturan.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/produk.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';

@@ -1,6 +1,7 @@
 import 'package:admin_kangsayur/ui/auth/login/login.dart';
 import 'package:admin_kangsayur/ui/sidebar/sidebar_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ui/sidebar/toko/detail_toko.dart';
 
@@ -12,6 +13,32 @@ class ResponsivePage extends StatefulWidget {
 }
 
 class _ResponsivePageState extends State<ResponsivePage> {
+
+  void getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString('token');
+    if (token != null) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SidebarNavigation(),
+          ));
+    } else if (token == null) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          ));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -26,7 +53,7 @@ class _ResponsivePageState extends State<ResponsivePage> {
             ),
           );
         } else {
-          return const LoginPage();
+          return Container();
         }
       },
     );
