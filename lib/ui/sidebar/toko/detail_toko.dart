@@ -15,6 +15,8 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
 
   var mapController = MapController();
 
+
+
   List<bool> isChecked = [false, false, false, false, false, false];
   List<String> categoryProduk = [
     "Sayuran",
@@ -56,6 +58,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
           padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -110,7 +113,6 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                //pengikut dan jumlah produk dan ditengah tengaha da vertical divider
                                Container(
                                  width: 100,
                                  padding: const EdgeInsets.all(10),
@@ -118,9 +120,9 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                    color: const Color(0xffeeeeee),
                                    borderRadius: BorderRadius.circular(5),
                                  ),
-                                 child: Column(
+                                 child: const Column(
                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                   children: const [
+                                   children: [
                                       Text(
                                         'Pengikut',
                                         style: TextStyle(
@@ -149,9 +151,9 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                     color: const Color(0xffeeeeee),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Column(
+                                  child: const Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       Text(
                                         'Produk',
                                         style: TextStyle(
@@ -180,147 +182,316 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                     ),
                   ),
                   const SizedBox(width: 20,),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 500,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      //box shadow
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Deskripsi Toko",
-                          style: textTheme.headline6!.copyWith(
-                            color: ColorValue.primaryColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(height: 10,),
-                        const Text(
-                          "Toko Bu Endah adalah toko yang menjual berbagai macam jenis kue kering dan kue basah. Toko ini sudah berdiri sejak tahun 2000 dan sudah memiliki banyak pelanggan. Toko ini juga sudah memiliki banyak cabang di berbagai kota di Indonesia. Toko ini juga sudah memiliki sertifikat halal dari MUI. ",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: ColorValue.neutralColor
-                          ),
-                        ),
-                        const Divider(
-                          color: ColorValue.hintColor,
-                          thickness: 1,
-                          height: 40,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _componentToko("Alamat Toko", "Jl. Raya Bogor KM 30, Jakarta Timur"),
-                                const SizedBox(height: 20,),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _tittleText("Jam Operasional"),
-                                    const SizedBox(height: 10,),
-                                    _descText("Senin - Jumat : 08.00 - 17.00"),
-                                    _descText("Sabtu : 08.00 - 15.00"),
-                                  ],
-                                ),
-                              ],
+                  if (MediaQuery.sizeOf(context).width >= 1024 && MediaQuery.sizeOf(context).width < 1178)
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 450,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          //box shadow
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _componentToko("Nomor Telepon", "08123456789"),
-                                const SizedBox(height: 20,),
-                                _componentToko("Status toko", "Aktif"),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _componentToko("Email", "tokobuendah@gmail.com" ),
-                                const SizedBox(height: 20,),
-                                _componentToko("Tanggal bergabung", " 23 April 2023"),
-                              ],
-                            ),
-                            Container(
-                              //flutter mapbox
-                              width: 200,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                //box shadow
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: InkWell(
-                                onTap: (){
-                                  //show dialog map screen
-                                  _showDialogMapScreen();
-                                },
-                                child: FlutterMap(
-                                  options: MapOptions(
-                                    center: AppConstants.myLocation,
-                                    zoom: 14.0,
-                                    //launch url
-                                    onTap: (tapPosition, point) {
-                                      _showDialogMapScreen();
-                                      print("tapPosition: $tapPosition, point: $point");
-                                    },
-                                  ),
-                                  mapController: mapController,
-                                  children: [
-                                    TileLayer(
-                                      urlTemplate: AppConstants.mapBoxStyleId,
-                                      additionalOptions: const {
-                                        'accessToken': AppConstants.mapBoxAccessToken,
-                                        'id': 'mapbox.mapbox-streets-v8',
-                                        'mapStyleId': AppConstants.mapBoxStyleId
-                                      },
-                                    ),
-                                    MarkerLayer(
-                                      markers: [
-                                        Marker(
-                                          width: 80.0,
-                                          height: 80.0,
-                                          point: AppConstants.myLocation,
-                                          builder: (ctx) => const Icon(
-                                            Icons.location_pin,
-                                            size: 50,
-                                            color: ColorValue.primaryColor,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            )
                           ],
                         ),
-                      ],
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Deskripsi Toko",
+                              style: textTheme.headline6!.copyWith(
+                                color: ColorValue.primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 10,),
+                            const Text(
+                              "Toko Bu Endah adalah toko yang menjual berbagai macam jenis kue kering dan kue basah. Toko ini sudah berdiri sejak tahun 2000 dan sudah memiliki banyak pelanggan. Toko ini juga sudah memiliki banyak cabang di berbagai kota di Indonesia. Toko ini juga sudah memiliki sertifikat halal dari MUI. ",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: ColorValue.neutralColor
+                              ),
+                            ),
+                            const Divider(
+                              color: ColorValue.hintColor,
+                              thickness: 1,
+                              height: 40,
+                            ),
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      _componentToko("Alamat Toko", "Jl. Raya Bogor KM 30, Jakarta Timur"),
+                                      const SizedBox(height: 20,),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            _tittleText("Jam Operasional"),
+                                            const SizedBox(height: 10,),
+                                            _descText("Senin - Jumat : 08.00 - 17.00"),
+                                            _descText("Sabtu : 08.00 - 15.00"),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        _componentToko("Nomor Telepon", "08123456789"),
+                                        const SizedBox(height: 20,),
+                                        _componentToko("Status toko", "Aktif"),
+                                      ],
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        _componentToko("Email", "tokobuendah@gmail.com" ),
+                                        const SizedBox(height: 20,),
+                                        _componentToko("Tanggal bergabung", " 23 April 2023"),
+                                      ],
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Container(
+                                        width: 200,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          //box shadow
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 1,
+                                              blurRadius: 5,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: InkWell(
+                                          onTap: (){
+                                            //show dialog map screen
+                                            _showDialogMapScreen();
+                                          },
+                                          child: FlutterMap(
+                                            options: MapOptions(
+                                              center: AppConstants.myLocation,
+                                              zoom: 14.0,
+                                              //launch url
+                                              onTap: (tapPosition, point) {
+                                                _showDialogMapScreen();
+                                                print("tapPosition: $tapPosition, point: $point");
+                                              },
+                                            ),
+                                            mapController: mapController,
+                                            children: [
+                                              TileLayer(
+                                                urlTemplate: AppConstants.mapBoxStyleId,
+                                                additionalOptions: const {
+                                                  'accessToken': AppConstants.mapBoxAccessToken,
+                                                  'id': 'mapbox.mapbox-streets-v8',
+                                                  'mapStyleId': AppConstants.mapBoxStyleId
+                                                },
+                                              ),
+                                              MarkerLayer(
+                                                markers: [
+                                                  Marker(
+                                                    width: 80.0,
+                                                    height: 80.0,
+                                                    point: AppConstants.myLocation,
+                                                    builder: (ctx) => const Icon(
+                                                      Icons.location_pin,
+                                                      size: 50,
+                                                      color: ColorValue.primaryColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  if (MediaQuery.sizeOf(context).width >= 1178)
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 350,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          //box shadow
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Deskripsi Toko",
+                              style: textTheme.headline6!.copyWith(
+                                color: ColorValue.primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 10,),
+                            const Text(
+                              "Toko Bu Endah adalah toko yang menjual berbagai macam jenis kue kering dan kue basah. Toko ini sudah berdiri sejak tahun 2000 dan sudah memiliki banyak pelanggan. Toko ini juga sudah memiliki banyak cabang di berbagai kota di Indonesia. Toko ini juga sudah memiliki sertifikat halal dari MUI. ",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: ColorValue.neutralColor
+                              ),
+                            ),
+                            const Divider(
+                              color: ColorValue.hintColor,
+                              thickness: 1,
+                              height: 40,
+                            ),
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      _componentToko("Alamat Toko", "Jl. Raya Bogor KM 30, Jakarta Timur"),
+                                      const SizedBox(height: 20,),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            _tittleText("Jam Operasional"),
+                                            const SizedBox(height: 10,),
+                                            _descText("Senin - Jumat : 08.00 - 17.00"),
+                                            _descText("Sabtu : 08.00 - 15.00"),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        _componentToko("Nomor Telepon", "08123456789"),
+                                        const SizedBox(height: 20,),
+                                        _componentToko("Status toko", "Aktif"),
+                                      ],
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        _componentToko("Email", "tokobuendah@gmail.com" ),
+                                        const SizedBox(height: 20,),
+                                        _componentToko("Tanggal bergabung", " 23 April 2023"),
+                                      ],
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Container(
+                                        width: 200,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          //box shadow
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 1,
+                                              blurRadius: 5,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: InkWell(
+                                          onTap: (){
+                                            //show dialog map screen
+                                            _showDialogMapScreen();
+                                          },
+                                          child: FlutterMap(
+                                            options: MapOptions(
+                                              center: AppConstants.myLocation,
+                                              zoom: 14.0,
+                                              //launch url
+                                              onTap: (tapPosition, point) {
+                                                _showDialogMapScreen();
+                                                print("tapPosition: $tapPosition, point: $point");
+                                              },
+                                            ),
+                                            mapController: mapController,
+                                            children: [
+                                              TileLayer(
+                                                urlTemplate: AppConstants.mapBoxStyleId,
+                                                additionalOptions: const {
+                                                  'accessToken': AppConstants.mapBoxAccessToken,
+                                                  'id': 'mapbox.mapbox-streets-v8',
+                                                  'mapStyleId': AppConstants.mapBoxStyleId
+                                                },
+                                              ),
+                                              MarkerLayer(
+                                                markers: [
+                                                  Marker(
+                                                    width: 80.0,
+                                                    height: 80.0,
+                                                    point: AppConstants.myLocation,
+                                                    builder: (ctx) => const Icon(
+                                                      Icons.location_pin,
+                                                      size: 50,
+                                                      color: ColorValue.primaryColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                 ],
               ),
               const SizedBox(height: 10,),
@@ -416,42 +587,93 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                     ),
                   ),
                   const SizedBox(width: 20,),
-                  //list produk yang dijual dalam grid
-                  Expanded(
-                    child: GridView.count(
-                      crossAxisCount: 6,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      childAspectRatio: 0.6,
-                      shrinkWrap: true,
-                      children: [
-                        _produk("assets/images/sayur_user.png", "Kangkung", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Apel Jepang", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Kangkung", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Apel Jepang", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                        _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
-                      ],
+                  if (MediaQuery.sizeOf(context).width < 1190)
+                    Flexible(
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        shrinkWrap: true,
+                        children: [
+                          _produk("assets/images/sayur_user.png", "Kangkung", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Apel Jepang", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                        ],
+                      ),
                     ),
-                  )
+                  if (MediaQuery.sizeOf(context).width < 1285 && MediaQuery.sizeOf(context).width > 1190)
+                    Flexible(
+                      child: GridView.count(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        childAspectRatio: 0.5,
+                        shrinkWrap: true,
+                        children: [
+                          _produk("assets/images/sayur_user.png", "Kangkung", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Apel Jepang", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                        ],
+                      ),
+                    ),
+                  if (MediaQuery.sizeOf(context).width >= 1285 && MediaQuery.sizeOf(context).width < 1567)
+                    Flexible(
+                      child: GridView.count(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        childAspectRatio: 0.7,
+                        shrinkWrap: true,
+                        children: [
+                          _produk("assets/images/sayur_user.png", "Kangkung", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Apel Jepang", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                        ],
+                      ),
+                    ),
+                  if (MediaQuery.sizeOf(context).width >= 1567 && MediaQuery.sizeOf(context).width < 2200)
+                    Flexible(
+                      child: GridView.count(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        shrinkWrap: true,
+                        children: [
+                          _produk("assets/images/sayur_user.png", "Kangkung", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Apel Jepang", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                        ],
+                      ),
+                    ),
+                  if (MediaQuery.sizeOf(context).width >= 2200)
+                    Flexible(
+                      child: GridView.count(
+                        crossAxisCount: 6,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        shrinkWrap: true,
+                        children: [
+                          _produk("assets/images/sayur_user.png", "Kangkung", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Apel Jepang", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Ayam Potong", "Rp 10.000", "10"),
+                          _produk("assets/images/sayur_user.png", "Daging Wagyu", "Rp 10.000", "10"),
+                        ],
+                      ),
+                    ),
                 ],
               )
             ],
@@ -479,17 +701,16 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
       style: textTheme.headline6!.copyWith(
         color: ColorValue.primaryColor,
         fontWeight: FontWeight.w700,
-        fontSize: 18,
+        fontSize: 16,
       ),
     );
   }
 
   Widget _descText(String desc){
-    final textTheme = Theme.of(context).textTheme;
     return Text(
       desc,
       style: const TextStyle(
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.w500,
           color: ColorValue.neutralColor
       ),
@@ -521,7 +742,6 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
-        //box shadow
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -559,6 +779,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                     fontWeight: FontWeight.w700,
                     fontSize: 18,
                   ),
+                  maxLines: 2,
                 ),
                 const SizedBox(height: 10,),
                 Text(
