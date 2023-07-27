@@ -630,7 +630,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                   builder: (context, state) {
                                     if(state is IsLoadingProduk){
                                       return const Padding(
-                                        padding: EdgeInsets.fromLTRB(150, 80, 80, 70),
+                                        padding: EdgeInsets.fromLTRB(300, 160, 80, 70),
                                         child: Center(
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -728,19 +728,20 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                   listener: (context, state) {},
                                   builder: (context, state) {
                                     if(state is IsLoadingProduk){
-                                      return const Center(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: 100,
-                                              width: 100,
-                                              child: CircularProgressIndicator(),
-                                            ),
-                                            SizedBox(height: 10,),
-                                            Text("Loading...")
-                                          ],
+                                      return const Padding(
+                                        padding: EdgeInsets.fromLTRB(500, 150, 80, 70),
+                                        child: Center(
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 100,
+                                                width: 100,
+                                                child: CircularProgressIndicator(),
+                                              ),
+                                              SizedBox(height: 10,),
+                                              Text("Loading...")
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }else if (state is IsLoadedProduk){
