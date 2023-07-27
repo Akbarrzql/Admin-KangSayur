@@ -2,6 +2,7 @@ import 'package:admin_kangsayur/ui/sidebar/item/list_toko/bloc/list_toko_bloc.da
 import 'package:admin_kangsayur/ui/sidebar/item/list_toko/event/list_toko_event.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/list_toko/repository/list_toko_repository.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/list_toko/state/list_toko_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -191,7 +192,7 @@ class _ListTokoState extends State<ListToko> {
                               itemBuilder: (context, index) {
                                 return _listToko(
                                   filteredList[index].namaToko.toString(),
-                                  filteredList[index].imgProfile.toString(),
+                                  'https://kangsayur.nitipaja.online${filteredList[index].imgProfile.toString()}',
                                   filteredList[index].alamat.toString(),
                                       () {
                                     print("Toko ke $index");
@@ -310,7 +311,7 @@ class _ListTokoState extends State<ListToko> {
                               itemBuilder: (context, index) {
                                 return _listToko(
                                   filteredList[index].namaToko.toString(),
-                                  filteredList[index].imgProfile.toString(),
+                                  'https://kangsayur.nitipaja.online${filteredList[index].imgProfile.toString()}',
                                   filteredList[index].alamat.toString(),
                                       () {
                                     print("Toko ke $index");
@@ -334,10 +335,10 @@ class _ListTokoState extends State<ListToko> {
                                 children: [
                                   ElevatedButton(
                                       onPressed: currentPage > 1 ? () => changePage(-1) : null,
-                                      child: const Icon(Icons.arrow_back),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: ColorValue.primaryColor,
-                                      )
+                                      ),
+                                      child: const Icon(Icons.arrow_back)
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
@@ -469,7 +470,7 @@ class _ListTokoState extends State<ListToko> {
           child: ListTile(
               leading: CircleAvatar(
                 radius: 30,
-                backgroundImage: Image.network("https://kangsayur.nitipaja.online/${image}").image,
+                backgroundImage: Image.network(image).image,
               ),
               title: Text(
                 name,
@@ -485,13 +486,13 @@ class _ListTokoState extends State<ListToko> {
                   fontSize: 14,
                 ),
               ),
-              trailing: IconButton(
-                onPressed: (){},
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-              )
+              // trailing: IconButton(
+              //   onPressed: (){},
+              //   icon: const Icon(
+              //     Icons.delete,
+              //     color: Colors.red,
+              //   ),
+              // )
           ),
         ),
       ),
