@@ -24,28 +24,7 @@ class _DetailVerifikasiProdukState extends State<DetailVerifikasiProduk> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            'Detail Verifikasi Produk',
-            style: textTheme.headline6!.copyWith(
-              color: ColorValue.neutralColor,
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-            )
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: ColorValue.neutralColor,
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -158,25 +137,50 @@ class _DetailVerifikasiProdukState extends State<DetailVerifikasiProduk> {
                             listener: (context, state) {},
                             builder: (context, state) {
                               if(state is VerifyProdukInitial){
-                                return ElevatedButton(
-                                  onPressed: (){
-                                    BlocProvider.of<VerifyProdukBloc>(context).add(GetVerify(idProduk: widget.data.variant[0].productId.toString()));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: ColorValue.primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
+                                return Column(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: (){
+                                        BlocProvider.of<VerifyProdukBloc>(context).add(GetVerify(idProduk: widget.data.variant[0].productId.toString()));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ColorValue.primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        minimumSize: Size(MediaQuery.sizeOf(context).width, 50),
+                                      ),
+                                      child: Text(
+                                        'Verifikasi',
+                                        style: textTheme.bodyText1!.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                        ),
+                                      ),
                                     ),
-                                    minimumSize: Size(MediaQuery.sizeOf(context).width, 50),
-                                  ),
-                                  child: Text(
-                                    'Verifikasi',
-                                    style: textTheme.bodyText1!.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
+                                    const SizedBox(height: 20,),
+                                    ElevatedButton(
+                                      onPressed: (){
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ColorValue.quaternaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        minimumSize: Size(MediaQuery.sizeOf(context).width, 50),
+                                      ),
+                                      child: Text(
+                                        'Kembali',
+                                        style: textTheme.bodyText1!.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 );
                               }else if (state is VerifyProdukLoading){
                                 return const Center(
@@ -273,7 +277,6 @@ class _DetailVerifikasiProdukState extends State<DetailVerifikasiProduk> {
             ),
           ),
         ),
-      ),
     );
   }
 

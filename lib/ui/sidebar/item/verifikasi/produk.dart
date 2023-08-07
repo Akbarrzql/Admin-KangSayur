@@ -153,12 +153,10 @@ class _ProdukDataSource extends DataTableSource {
         DataCell(
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                _context,
-                MaterialPageRoute(
-                  builder: (context) => DetailVerifikasiProduk(
-                    data: data,
-                  ),
+              showDialog(
+                context: _context,
+                builder: (context) => DetailVerifikasiProduk(
+                  data: data,
                 ),
               );
             },
