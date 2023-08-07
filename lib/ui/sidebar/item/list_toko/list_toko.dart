@@ -93,17 +93,6 @@ class _ListTokoState extends State<ListToko> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            'List Toko',
-            style: textTheme.headline6!.copyWith(
-              color: ColorValue.neutralColor,
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-            )
-        ),
-        backgroundColor: Colors.white,
-      ),
       body: BlocProvider(
         create: (context) => listTokoPageBloc..add(GetListToko()),
         child: BlocBuilder<ListTokoPageBloc, ListTokoPageState>(

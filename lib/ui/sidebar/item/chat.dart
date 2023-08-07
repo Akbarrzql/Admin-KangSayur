@@ -37,18 +37,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            'Chat',
-            style: textTheme.headline6!.copyWith(
-              color: ColorValue.neutralColor,
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-            )
-        ),
-        backgroundColor: Colors.white,
-      ),
-      body: Padding(
+        body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

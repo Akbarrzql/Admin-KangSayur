@@ -3,11 +3,12 @@ import 'package:admin_kangsayur/ui/auth/bloc/logout_bloc.dart';
 import 'package:admin_kangsayur/ui/auth/repository/logout_repository.dart';
 import 'package:admin_kangsayur/ui/auth/state/logout_state.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/chat.dart';
-import 'package:admin_kangsayur/ui/sidebar/item/dashboard.dart';
+import 'package:admin_kangsayur/ui/sidebar/item/dashboard/dashboard.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/laporan_pengguna.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/list_toko/list_toko.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/pengaturan.dart';
-import 'package:admin_kangsayur/ui/sidebar/item/produk.dart';
+import 'package:admin_kangsayur/ui/sidebar/item/verifikasi/produk.dart';
+import 'package:admin_kangsayur/ui/sidebar/item/verifikasi/toko.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,10 +96,6 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                           sideMenu.changePage(page);
                         },
                         icon: const Icon(Icons.dashboard),
-                        badgeContent: const Text(
-                          '3',
-                          style: TextStyle(color: Colors.white),
-                        ),
                         tooltipContent: "Dashboard",
                       ),
                       SideMenuItem(
@@ -109,25 +106,45 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                         },
                         icon: const Icon(Icons.store),
                       ),
+                      // SideMenuItem(
+                      //   priority: 2,
+                      //   title: 'Verifikasi Toko',
+                      //   onTap: (page, _) {
+                      //     sideMenu.changePage(page);
+                      //   },
+                      //   icon: const Icon(Icons.shopping_bag),
+                      //   trailing: Container(
+                      //       decoration: const BoxDecoration(
+                      //           color: Colors.amber,
+                      //           borderRadius: BorderRadius.all(Radius.circular(6))),
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.symmetric(
+                      //             horizontal: 6.0, vertical: 3),
+                      //         child: Text(
+                      //           'New',
+                      //           style: TextStyle(fontSize: 11, color: Colors.grey[800]),
+                      //         ),
+                      //       )),
+                      // ),
                       SideMenuItem(
                         priority: 2,
-                        title: 'List dan Verifikasi Produk',
+                        title: 'Verifikasi Produk',
                         onTap: (page, _) {
                           sideMenu.changePage(page);
                         },
                         icon: const Icon(Icons.shopping_bag),
-                        trailing: Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.all(Radius.circular(6))),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 6.0, vertical: 3),
-                              child: Text(
-                                'New',
-                                style: TextStyle(fontSize: 11, color: Colors.grey[800]),
-                              ),
-                            )),
+                          trailing: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.all(Radius.circular(6))),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 6.0, vertical: 3),
+                                child: Text(
+                                  'Penting !',
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                ),
+                              ))
                       ),
                       SideMenuItem(
                         priority: 3,
@@ -145,19 +162,19 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                         },
                         icon: const Icon(Icons.chat),
                       ),
-                      SideMenuItem(
-                        priority: 5,
-                        title: 'Pengaturan',
-                        onTap: (page, _) {
-                          sideMenu.changePage(page);
-                        },
-                        icon: const Icon(Icons.settings),
-                      ),
+                      // SideMenuItem(
+                      //   priority: 6,
+                      //   title: 'Pengaturan',
+                      //   onTap: (page, _) {
+                      //     sideMenu.changePage(page);
+                      //   },
+                      //   icon: const Icon(Icons.settings),
+                      // ),
                       SideMenuItem(
                         onTap: (page, _) {
                           BlocProvider.of<LogoutPageBloc>(context).add(LogoutButtonPressed());
                         },
-                        priority: 7,
+                        priority: 5,
                         title: 'Keluar',
                         icon: const Icon(Icons.exit_to_app_outlined, color: Colors.red),
                       ),
@@ -170,10 +187,11 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                         //page class
                         DashboardPage(),
                         ListToko(),
+                        // TokoAllPage(),
                         ProdukALlPage(),
                         LaporanPengguna(),
                         ChatPage(),
-                        PengaturanPage(),
+                        // PengaturanPage(),
                       ],
                     ),
                   ),

@@ -659,7 +659,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("assets/images/sayur_user.png", data.produk[index].namaProduk, data.produk[index].harga.toString(), data.produk[index].isOnsale.toString());
+                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk,  data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
                                           },
                                         ),
                                       );
@@ -708,7 +708,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("assets/images/sayur_user.png", data.produk[index].namaProduk, data.produk[index].harga.toString(), data.produk[index].isOnsale.toString());
+                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
                                           },
                                         ),
                                       );
@@ -757,7 +757,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("assets/images/sayur_user.png", data.produk[index].namaProduk, data.produk[index].harga.toString(), data.produk[index].isOnsale.toString());
+                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
                                           },
                                         ),
                                       );
@@ -807,7 +807,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("assets/images/sayur_user.png", data.produk[index].namaProduk, data.produk[index].harga.toString(), data.produk[index].isOnsale.toString());
+                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
                                           },
                                         ),
                                       );
@@ -855,7 +855,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("assets/images/sayur_user.png", data.produk[index].namaProduk, data.produk[index].harga.toString(), data.produk[index].isOnsale.toString());
+                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
                                           },
                                         ),
                                       );
@@ -956,7 +956,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
     );
   }
 
-  Widget _produk (String image, String name, String price, String stock){
+  Widget _produk (String image, String name, String desc, String price, String stock){
     final textTheme = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
@@ -979,11 +979,12 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
-            child: Image.asset(
+            child: Image.network(
               image,
               width: double.infinity,
               height: 150,
               fit: BoxFit.cover,
+              color: ColorValue.primaryColor,
             ),
           ),
           const SizedBox(height: 10,),
@@ -1000,6 +1001,17 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                     fontSize: 18,
                   ),
                   maxLines: 2,
+                ),
+                const SizedBox(height: 10,),
+                Text(
+                  desc,
+                  style: textTheme.headline6!.copyWith(
+                    color: ColorValue.hintColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 10,),
                 Text(
