@@ -36,11 +36,15 @@ class ProdukModel {
 class Produk {
   final int id;
   final String namaProduk;
-  final double rating;
+  final double? rating;
   final int tokoId;
   final int isOnsale;
-  final dynamic image;
-  final int harga;
+  final int productId;
+  final String variantImg;
+  final String variant;
+  final String variantDesc;
+  final int stok;
+  final int hargaVariant;
 
   Produk({
     required this.id,
@@ -48,8 +52,12 @@ class Produk {
     required this.rating,
     required this.tokoId,
     required this.isOnsale,
-    required this.image,
-    required this.harga,
+    required this.productId,
+    required this.variantImg,
+    required this.variant,
+    required this.variantDesc,
+    required this.stok,
+    required this.hargaVariant,
   });
 
   factory Produk.fromJson(Map<String, dynamic> json) => Produk(
@@ -58,8 +66,12 @@ class Produk {
     rating: json["rating"]?.toDouble(),
     tokoId: json["toko_id"],
     isOnsale: json["is_onsale"],
-    image: json["image"],
-    harga: json["harga"],
+    productId: json["product_id"],
+    variantImg: json["variant_img"],
+    variant: json["variant"],
+    variantDesc: json["variant_desc"],
+    stok: json["stok"],
+    hargaVariant: json["harga_variant"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -68,7 +80,11 @@ class Produk {
     "rating": rating,
     "toko_id": tokoId,
     "is_onsale": isOnsale,
-    "image": image,
-    "harga": harga,
+    "product_id": productId,
+    "variant_img": variantImg,
+    "variant": variant,
+    "variant_desc": variantDesc,
+    "stok": stok,
+    "harga_variant": hargaVariant,
   };
 }
