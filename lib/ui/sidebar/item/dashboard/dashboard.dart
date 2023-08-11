@@ -43,8 +43,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       body: BlocProvider(
         create: (context) =>
-            DashboardPageBloc(dashboardRepository: DashboardRepository())
-              ..add(GetDashboard()),
+            DashboardPageBloc(dashboardRepository: DashboardRepository())..add(GetDashboard()),
         child: BlocBuilder<DashboardPageBloc, DashboardState>(
           builder: (context, state) {
             if (state is DashboardLoading) {
@@ -116,56 +115,6 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Data statistik laporan pengguna (Setiap Bulan)',
-                      style: textTheme.headline6!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      height: 300,
-                      child: SfCartesianChart(
-                        primaryXAxis: CategoryAxis(),
-                        series: <ChartSeries>[
-                          LineSeries<SalesData, String>(
-                            dataSource: [
-                              // SalesData('Jan', 10),
-                              // SalesData('Feb', 2),
-                              // SalesData('Mar', 0),
-                              SalesData('Apr', 10),
-                              SalesData('May', 4),
-                              SalesData('Jun', 8),
-                              SalesData('Jul', 5),
-                              SalesData('Aug', 10),
-                              // SalesData('Sep', 0),
-                              // SalesData('Oct', 12),
-                              // SalesData('Nov', 6),
-                              // SalesData('Dec', 8),
-                            ],
-                            markerSettings:
-                                const MarkerSettings(isVisible: true),
-                            dataLabelSettings:
-                                const DataLabelSettings(isVisible: true),
-                            enableTooltip: true,
-                            // gradient: const LinearGradient(
-                            //   colors: [
-                            //     ColorValue.primaryColor,
-                            //     ColorValue.secondaryColor
-                            //   ],
-                            // ),
-                            // borderColor: ColorValue.primaryColor,
-                            // borderDrawMode: BorderDrawMode.all,
-                            animationDuration: 5000,
-                            color: ColorValue.primaryColor,
-                            xValueMapper: (SalesData sales, _) => sales.month,
-                            yValueMapper: (SalesData sales, _) => sales.sales,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
                       'Data Statistik Total Pendaftaran Toko (Setiap Bulan)',
                       style: textTheme.headline6!.copyWith(
                         fontWeight: FontWeight.w600,
@@ -179,20 +128,10 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: SfCartesianChart(
                         primaryXAxis: CategoryAxis(),
                         series: <ChartSeries>[
-                          ColumnSeries<SalesData, String>(
+                          LineSeries<SalesData, String>(
                             dataSource: [
-                              // SalesData('Jan', 10),
-                              // SalesData('Feb', 2),
-                              // SalesData('Mar', 5),
-                              SalesData('Apr', 1),
-                              SalesData('May', 3),
-                              SalesData('Jun', 2),
-                              SalesData('Jul', 2),
-                              SalesData('Aug', 4),
-                              // SalesData('Sep', 15),
-                              // SalesData('Oct', 12),
-                              // SalesData('Nov', 6),
-                              // SalesData('Dec', 8),
+                              for(int i = 0; i < dashboardModel.pendaftaranToko.length; i++)
+                                SalesData(dashboardModel.pendaftaranToko[i].bulan, dashboardModel.pendaftaranToko[i].jumlahPendaftaran.toDouble()),
                             ],
                             markerSettings:
                                 const MarkerSettings(isVisible: true),
@@ -204,103 +143,11 @@ class _DashboardPageState extends State<DashboardPage> {
                             yAxisName: 'Jumlah Toko',
                             xAxisName: 'Bulan',
                             xValueMapper: (SalesData sales, _) => sales.month,
-                            yValueMapper: (SalesData sales, _) => sales.sales,
+                            yValueMapper: (SalesData sales, _) => sales.register,
                           ),
                         ],
                       ),
                     ),
-                    // const SizedBox(height: 30),
-                    // Text(
-                    //   'Sekilas Laporan Pengguna',
-                    //   style: textTheme.headline6!.copyWith(
-                    //     fontWeight: FontWeight.w600,
-                    //     fontSize: 18,
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 10),
-                    // SizedBox(
-                    //   height: 300,
-                    //   child: ListView.builder(
-                    //     scrollDirection: Axis.horizontal,
-                    //     itemCount: 1,
-                    //     itemBuilder: (context, index) {
-                    //       return Container(
-                    //         width: 300,
-                    //         margin: const EdgeInsets.fromLTRB(5,10,10,10),
-                    //         decoration: BoxDecoration(
-                    //           color: Colors.white,
-                    //           borderRadius: BorderRadius.circular(10),
-                    //           boxShadow: [
-                    //             BoxShadow(
-                    //               color: Colors.grey.withOpacity(0.5),
-                    //               spreadRadius: 2,
-                    //               blurRadius: 5,
-                    //               offset: const Offset(0, 3),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.all(20.0),
-                    //           child: Column(
-                    //             crossAxisAlignment: CrossAxisAlignment.start,
-                    //             children: [
-                    //               Row(
-                    //                 mainAxisAlignment:
-                    //                     MainAxisAlignment.spaceBetween,
-                    //                 children: [
-                    //                   Row(
-                    //                     children: [
-                    //                       const CircleAvatar(
-                    //                         backgroundColor:
-                    //                             ColorValue.primaryColor,
-                    //                         radius: 20,
-                    //                         child: Icon(
-                    //                           Icons.person,
-                    //                           color: Colors.white,
-                    //                         ),
-                    //                       ),
-                    //                       const SizedBox(width: 10),
-                    //                       Column(
-                    //                         crossAxisAlignment:
-                    //                             CrossAxisAlignment.start,
-                    //                         children: [
-                    //                           Text(
-                    //                             'Nama Pengguna',
-                    //                             style: textTheme.headline6!
-                    //                                 .copyWith(
-                    //                               fontWeight: FontWeight.w600,
-                    //                               fontSize: 16,
-                    //                             ),
-                    //                           ),
-                    //                           Text(
-                    //                             '12/12/2021',
-                    //                             style: textTheme.headline6!
-                    //                                 .copyWith(
-                    //                               fontWeight: FontWeight.w400,
-                    //                               fontSize: 14,
-                    //                             ),
-                    //                           ),
-                    //                         ],
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //               const SizedBox(height: 10),
-                    //               Text(
-                    //                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nunc eget odio ultricies aliquet. Sed vitae nunc eget odio ultricies aliquet.',
-                    //                 style: textTheme.headline6!.copyWith(
-                    //                   fontWeight: FontWeight.w400,
-                    //                   fontSize: 16,
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       );
-                    //     },
-                    //   )
-                    // ),
                   ],
                 ),
               );
@@ -481,7 +328,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
 class SalesData {
   final String month;
-  final double sales;
+  final double register;
 
-  SalesData(this.month, this.sales);
+  SalesData(this.month, this.register);
 }
