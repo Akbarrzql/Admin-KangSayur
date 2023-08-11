@@ -97,9 +97,101 @@ class _LoginPageState extends State<LoginPage> {
             } else if (state is LoginPageLoaded){
               return const SidebarNavigation();
             }else if(state is LoginPageError){
-              return const Center(child: Text("Terdapat kesalahan pada sistem"));
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                        "Terdapat Kesalahan pada inputan",
+                      style: textTheme.subtitle1!.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: ColorValue.neutralColor
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: ColorValue.primaryColor,
+                        minimumSize: const Size(310, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        textStyle: textTheme.button!.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.white
+                        ),
+                      ),
+                      child: Text(
+                        "Coba Lagi",
+                        style: textTheme.button!.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.white
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
             } else {
-              return const Center(child: Text("Terdapat kesalahan pada sistem"));
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Terdapat Kesalahan pada sistem",
+                      style: textTheme.subtitle1!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                          color: ColorValue.neutralColor
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<LoginPageBloc>(context).add(LoginButtonPressed(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        ));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: ColorValue.primaryColor,
+                        minimumSize: const Size(310, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        textStyle: textTheme.button!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.white
+                        ),
+                      ),
+                      child: Text(
+                        "Coba Lagi",
+                        style: textTheme.button!.copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: Colors.white
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
             }
           },
         )

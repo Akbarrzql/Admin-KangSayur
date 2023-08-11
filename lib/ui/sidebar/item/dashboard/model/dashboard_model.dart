@@ -13,23 +13,47 @@ class DashboardModel {
   final String status;
   final String message;
   final TopDashboard topDashboard;
+  final List<PendaftaranToko> pendaftaranToko;
 
   DashboardModel({
     required this.status,
     required this.message,
     required this.topDashboard,
+    required this.pendaftaranToko,
   });
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
     status: json["status"],
     message: json["message"],
     topDashboard: TopDashboard.fromJson(json["top_dashboard"]),
+    pendaftaranToko: List<PendaftaranToko>.from(json["pendaftaran_toko"].map((x) => PendaftaranToko.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
     "top_dashboard": topDashboard.toJson(),
+    "pendaftaran_toko": List<dynamic>.from(pendaftaranToko.map((x) => x.toJson())),
+  };
+}
+
+class PendaftaranToko {
+  final String bulan;
+  final int jumlahPendaftaran;
+
+  PendaftaranToko({
+    required this.bulan,
+    required this.jumlahPendaftaran,
+  });
+
+  factory PendaftaranToko.fromJson(Map<String, dynamic> json) => PendaftaranToko(
+    bulan: json["bulan"],
+    jumlahPendaftaran: json["jumlah_pendaftaran"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "bulan": bulan,
+    "jumlah_pendaftaran": jumlahPendaftaran,
   };
 }
 

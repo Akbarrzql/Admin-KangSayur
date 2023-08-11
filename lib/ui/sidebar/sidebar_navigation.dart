@@ -46,6 +46,7 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
           listener: (context, state) {},
           builder: (context, state) {
             if (state is InitialLogoutPageState){
+              final mainContext = context;
               return Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -172,7 +173,7 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                       // ),
                       SideMenuItem(
                         onTap: (page, _) {
-                          BlocProvider.of<LogoutPageBloc>(context).add(LogoutButtonPressed());
+                          exitPage(context, mainContext);
                         },
                         priority: 5,
                         title: 'Keluar',
@@ -218,30 +219,56 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
     );
   }
 
-  void exitPage(BuildContext context) {
+  void exitPage(BuildContext context, BuildContext context2) {
+    final textTheme = Theme.of(context).textTheme;
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
             title: Image.asset(
               'assets/images/logout.png',
-              height: 150,
-              width: 150,
+              height: 200,
+              width: 200,
             ),
-            content: const Text('Apakah anda yakin ingin keluar?'),
+            content: Text(
+                'Apakah anda yakin ingin keluar?',
+                style: textTheme.subtitle1!.copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  color: ColorValue.neutralColor,
+                )
+            ),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Tidak'),
+                child: Text(
+                    'Tidak',
+                    style: textTheme.subtitle1!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: ColorValue.primaryColor,
+                    )
+                ),
               ),
               TextButton(
                 onPressed: () {
                   print('logout');
-                  BlocProvider.of<LogoutPageBloc>(context).add(LogoutButtonPressed());
+                  BlocProvider.of<LogoutPageBloc>(context2).add(LogoutButtonPressed());
+                  Navigator.pop(context);
                 },
-                child: const Text('Ya, Keluar'),
+                child: Text(
+                    'Ya, Keluar',
+                    style: textTheme.subtitle1!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: ColorValue.primaryColor,
+                    )
+                ),
               ),
             ],
           );
