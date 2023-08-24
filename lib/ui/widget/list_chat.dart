@@ -24,16 +24,9 @@ class ListChart extends StatelessWidget {
                 Flexible(
                   child: Row(
                     children: [
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          image: DecorationImage(
-                            image: AssetImage(imagePelanggan),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundImage: Image.network(imagePelanggan).image,
                       ),
                       const SizedBox(
                         width: 8,
@@ -46,7 +39,7 @@ class ListChart extends StatelessWidget {
                               namePelanggan,
                               style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: ColorValue.neutralColor,
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -57,7 +50,7 @@ class ListChart extends StatelessWidget {
                               pesanPelanggan,
                               style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 color: ColorValue.neutralColor,
-                                fontSize: 12,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -80,24 +73,6 @@ class ListChart extends StatelessWidget {
                     ),
                     const SizedBox(
                       height: 4,
-                    ),
-                    Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.red,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),

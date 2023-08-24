@@ -72,9 +72,9 @@ class _ProdukALlPageState extends State<ProdukALlPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 50,),
-                    Lottie.network("https://assets4.lottiefiles.com/packages/lf20_eogwvdor.json", width: 400, height: 400),
-                    const SizedBox(height: 16),
+                    // SizedBox(height: 50,),
+                    // Lottie.network("https://assets4.lottiefiles.com/packages/lf20_eogwvdor.json", width: 400, height: 400),
+                    // const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -139,7 +139,7 @@ class _ProdukDataSource extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
-    if (index >= _data.data.length) {
+    if (index >= _data.data.length || index < 0) {
       return null;
     }
     final data = _data.data[index];
@@ -148,7 +148,9 @@ class _ProdukDataSource extends DataTableSource {
         DataCell(Text("${index + 1}")),
         DataCell(Text(data.namaProduk)),
         DataCell(
-          data.status == "Pending" ? statusVerifikasi(const Color(0xFFFDF2B2), const Color(0xFFEB6D18), 'Belum Terverifikasi') : statusVerifikasi(const Color(0xFFD7FEDF), ColorValue.primaryColor, 'Terverifikasi'),
+          data.status == "Pending"
+              ? statusVerifikasi(const Color(0xFFFDF2B2), const Color(0xFFEB6D18), 'Belum Terverifikasi')
+              : statusVerifikasi(const Color(0xFFD7FEDF), ColorValue.primaryColor, 'Terverifikasi'),
         ),
         DataCell(
           ElevatedButton(
@@ -183,6 +185,7 @@ class _ProdukDataSource extends DataTableSource {
   @override
   int get selectedRowCount => 0;
 }
+
 
 Widget statusVerifikasi(Color colorbg, Color colortext, String text) {
   return Container(
