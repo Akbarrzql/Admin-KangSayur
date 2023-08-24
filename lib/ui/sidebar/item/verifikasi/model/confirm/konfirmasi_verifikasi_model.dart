@@ -13,31 +13,27 @@ class KonfirmasiVerifikasiModel {
   final String statusCode;
   final String message;
   final Data data;
-  final String deviceToken;
-  final String? fcmServiceKey;
+  final User user;
 
   KonfirmasiVerifikasiModel({
     required this.statusCode,
     required this.message,
     required this.data,
-    required this.deviceToken,
-    required this.fcmServiceKey,
+    required this.user,
   });
 
   factory KonfirmasiVerifikasiModel.fromJson(Map<String, dynamic> json) => KonfirmasiVerifikasiModel(
     statusCode: json["status_code"],
     message: json["message"],
     data: Data.fromJson(json["data"]),
-    deviceToken: json["device_token"],
-    fcmServiceKey: json["FCM_SERVICE_KEY"],
+    user: User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
     "status_code": statusCode,
     "message": message,
     "data": data.toJson(),
-    "device_token": deviceToken,
-    "FCM_SERVICE_KEY": fcmServiceKey,
+    "user": user.toJson(),
   };
 }
 
@@ -86,5 +82,77 @@ class Notification {
     "body": body,
     "content_available": contentAvailable,
     "priority": priority,
+  };
+}
+
+class User {
+  final int id;
+  final String name;
+  final String photo;
+  final String email;
+  final int phoneNumber;
+  final String emailVerifiedAt;
+  final int sandiId;
+  final int jenisKelamin;
+  final DateTime tanggalLahir;
+  final String address;
+  final double longitude;
+  final double latitude;
+  final String deviceToken;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  User({
+    required this.id,
+    required this.name,
+    required this.photo,
+    required this.email,
+    required this.phoneNumber,
+    required this.emailVerifiedAt,
+    required this.sandiId,
+    required this.jenisKelamin,
+    required this.tanggalLahir,
+    required this.address,
+    required this.longitude,
+    required this.latitude,
+    required this.deviceToken,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json["id"],
+    name: json["name"],
+    photo: json["photo"],
+    email: json["email"],
+    phoneNumber: json["phone_number"],
+    emailVerifiedAt: json["email_verified_at"],
+    sandiId: json["sandi_id"],
+    jenisKelamin: json["jenis_kelamin"],
+    tanggalLahir: DateTime.parse(json["tanggal_lahir"]),
+    address: json["address"],
+    longitude: json["longitude"]?.toDouble(),
+    latitude: json["latitude"]?.toDouble(),
+    deviceToken: json["device_token"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "photo": photo,
+    "email": email,
+    "phone_number": phoneNumber,
+    "email_verified_at": emailVerifiedAt,
+    "sandi_id": sandiId,
+    "jenis_kelamin": jenisKelamin,
+    "tanggal_lahir": tanggalLahir.toIso8601String(),
+    "address": address,
+    "longitude": longitude,
+    "latitude": latitude,
+    "device_token": deviceToken,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
   };
 }

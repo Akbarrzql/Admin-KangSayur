@@ -97,7 +97,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   crossAxisCount: crossAxisCount,
                                   crossAxisSpacing: 20.0,
                                   mainAxisSpacing: 20.0,
-                                  childAspectRatio: 1.8),
+                                  childAspectRatio: 1.6),
                           itemCount: 4,
                           // Ubah sesuai dengan jumlah card yang ingin ditampilkan
                           itemBuilder: (context, index) {
@@ -122,7 +122,6 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    //bar chart
                     SizedBox(
                       height: 300,
                       child: SfCartesianChart(

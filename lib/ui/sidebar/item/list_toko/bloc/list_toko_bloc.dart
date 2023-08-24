@@ -17,7 +17,9 @@ class ListTokoPageBloc extends Bloc<ListTokoEvent, ListTokoPageState>{
         var listTokoModel = await listTokoRepository.listToko();
         _listTokoModel = listTokoModel;
         emit(ListTokoPageLoaded(listTokoModel));
+        print("berhasil");
       } catch (e) {
+        print(e.toString());
         emit(ListTokoPageError(e.toString()));
       }
     });

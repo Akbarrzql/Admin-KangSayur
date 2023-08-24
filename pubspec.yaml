@@ -49,6 +49,7 @@ dependencies:
   shimmer: ^3.0.0
   lottie: ^2.3.2
   syncfusion_flutter_charts: ^21.2.3
+  pusher_client:
 
 dev_dependencies:
   flutter_test:

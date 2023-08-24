@@ -2,7 +2,7 @@
 import 'package:admin_kangsayur/ui/auth/bloc/logout_bloc.dart';
 import 'package:admin_kangsayur/ui/auth/repository/logout_repository.dart';
 import 'package:admin_kangsayur/ui/auth/state/logout_state.dart';
-import 'package:admin_kangsayur/ui/sidebar/item/chat.dart';
+import 'package:admin_kangsayur/ui/sidebar/item/chat/chat.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/dashboard/dashboard.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/laporan_pengguna.dart';
 import 'package:admin_kangsayur/ui/sidebar/item/list_toko/list_toko.dart';
@@ -147,16 +147,16 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                                 ),
                               ))
                       ),
+                      // SideMenuItem(
+                      //   priority: 3,
+                      //   title: 'Laporan Pengguna',
+                      //   onTap: (page, _) {
+                      //     sideMenu.changePage(page);
+                      //   },
+                      //   icon: const Icon(Icons.report),
+                      // ),
                       SideMenuItem(
                         priority: 3,
-                        title: 'Laporan Pengguna',
-                        onTap: (page, _) {
-                          sideMenu.changePage(page);
-                        },
-                        icon: const Icon(Icons.report),
-                      ),
-                      SideMenuItem(
-                        priority: 4,
                         title: 'Chat',
                         onTap: (page, _) {
                           sideMenu.changePage(page);
@@ -175,7 +175,7 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                         onTap: (page, _) {
                           exitPage(context, mainContext);
                         },
-                        priority: 5,
+                        priority: 4,
                         title: 'Keluar',
                         icon: const Icon(Icons.exit_to_app_outlined, color: Colors.red),
                       ),
@@ -190,7 +190,7 @@ class _SidebarNavigationState extends State<SidebarNavigation> {
                         ListToko(),
                         // TokoAllPage(),
                         ProdukALlPage(),
-                        LaporanPengguna(),
+                        // LaporanPengguna(),
                         ChatPage(),
                         // PengaturanPage(),
                       ],

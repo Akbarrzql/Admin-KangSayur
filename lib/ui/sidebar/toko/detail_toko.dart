@@ -14,8 +14,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../common/color_value.dart';
 import '../../../contans/AppContants.dart';
+import '../item/list_toko/pop_up_produk.dart';
 import 'event/produk_event/produk_event.dart';
 import 'model/produk_model.dart';
+import 'package:intl/intl.dart';
 
 class DetailTokoPage extends StatefulWidget {
   const DetailTokoPage({Key? key, required this.index}) : super(key: key);
@@ -44,6 +46,7 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final _context = context;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -122,15 +125,16 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                 ),
                                 padding: const EdgeInsets.all(40),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        const CircleAvatar(
-                                            radius: 50,
-                                            backgroundImage: AssetImage('assets/images/ava_seller.png')
+                                        CircleAvatar(
+                                          radius: 50,
+                                          backgroundImage: Image.network("https://kangsayur.nitipaja.online${data.data.sellerInfo.photoProfile.toString()}").image,
                                         ),
                                         const SizedBox(height: 10,),
                                         Text(
@@ -150,74 +154,6 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                               color: ColorValue.neutralColor
                                           ),
                                         ),
-                                        const SizedBox(height: 20,),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 100,
-                                              padding: const EdgeInsets.all(10),
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xffeeeeee),
-                                                borderRadius: BorderRadius.circular(5),
-                                              ),
-                                              child: const Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Pengikut',
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: ColorValue.neutralColor
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 5,),
-                                                  Text(
-                                                    '735',
-                                                    style: TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight: FontWeight.w700,
-                                                        color: ColorValue.primaryColor
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(width: 20,),
-                                            Container(
-                                              width: 100,
-                                              padding: const EdgeInsets.all(10),
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xffeeeeee),
-                                                borderRadius: BorderRadius.circular(5),
-                                              ),
-                                              child: const Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Produk',
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: ColorValue.neutralColor
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 5,),
-                                                  Text(
-                                                    '100',
-                                                    style: TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight: FontWeight.w700,
-                                                        color: ColorValue.primaryColor
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        )
                                       ],
                                     ),
                                   ],
@@ -659,7 +595,14 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk,  data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
+                                            return _produk(context,'https://kangsayur.nitipaja.online${data.produk[index].variantImg}', data.produk[index].namaProduk,  data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString(), onLong: () {
+                                              showDialog(
+                                                context: _context,
+                                                builder: (context) => DetailTakeDownProduk(
+                                                  data: data.produk[index],
+                                                ),
+                                              );
+                                            },);
                                           },
                                         ),
                                       );
@@ -708,7 +651,14 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
+                                            return _produk(context,'https://kangsayur.nitipaja.online${data.produk[index].variantImg}', data.produk[index].namaProduk,  data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString(), onLong: () {
+                                              showDialog(
+                                                context: _context,
+                                                builder: (context) => DetailTakeDownProduk(
+                                                  data: data.produk[index],
+                                                ),
+                                              );
+                                            },);
                                           },
                                         ),
                                       );
@@ -757,7 +707,14 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
+                                            return _produk(context,'https://kangsayur.nitipaja.online${data.produk[index].variantImg}', data.produk[index].namaProduk,  data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString(), onLong: () {
+                                              showDialog(
+                                                context: _context,
+                                                builder: (context) => DetailTakeDownProduk(
+                                                  data: data.produk[index],
+                                                ),
+                                              );
+                                            },);
                                           },
                                         ),
                                       );
@@ -807,7 +764,14 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
+                                            return _produk(context,'https://kangsayur.nitipaja.online${data.produk[index].variantImg}', data.produk[index].namaProduk,  data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString(), onLong: () {
+                                              showDialog(
+                                                context: _context,
+                                                builder: (context) => DetailTakeDownProduk(
+                                                  data: data.produk[index],
+                                                ),
+                                              );
+                                            },);
                                           },
                                         ),
                                       );
@@ -855,7 +819,14 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
                                           itemCount: data.produk.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index){
-                                            return _produk("https://kangsayur.nitipaja.online${data.produk[index].variantImg}", data.produk[index].namaProduk, data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString());
+                                            return _produk(context,'https://kangsayur.nitipaja.online${data.produk[index].variantImg}', data.produk[index].namaProduk,  data.produk[index].variantDesc, data.produk[index].hargaVariant.toString(), data.produk[index].stok.toString(), onLong: () {
+                                              showDialog(
+                                                context: _context,
+                                                builder: (context) => DetailTakeDownProduk(
+                                                  data: data.produk[index],
+                                                ),
+                                              );
+                                            },);
                                           },
                                         ),
                                       );
@@ -956,85 +927,90 @@ class _DetailTokoPageState extends State<DetailTokoPage> {
     );
   }
 
-  Widget _produk (String image, String name, String desc, String price, String stock){
+  Widget _produk (BuildContext context, String image, String name, String desc, String price, String stock, {void Function()? onLong}){
     final textTheme = Theme.of(context).textTheme;
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
+    final _context = context;
+    return InkWell(
+      onLongPress: onLong,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
             ),
-            child: Image.network(
-              image,
-              width: double.infinity,
-              height: 150,
-              fit: BoxFit.cover,
-              color: ColorValue.primaryColor,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: Image(
+                image: NetworkImage(
+                  image
+                ),
+                width: double.infinity,
+                height: 150,
+                fit: BoxFit.cover,
+              )
             ),
-          ),
-          const SizedBox(height: 10,),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: textTheme.headline6!.copyWith(
-                    color: ColorValue.neutralColor,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
+            const SizedBox(height: 10,),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: textTheme.headline6!.copyWith(
+                      color: ColorValue.neutralColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                    maxLines: 2,
                   ),
-                  maxLines: 2,
-                ),
-                const SizedBox(height: 10,),
-                Text(
-                  desc,
-                  style: textTheme.headline6!.copyWith(
-                    color: ColorValue.hintColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 10,),
-                Text(
-                  price,
-                  style: textTheme.headline6!.copyWith(
-                    color: ColorValue.primaryColor,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                Text(
-                  "Stok : $stock",
-                  style: const TextStyle(
-                      fontSize: 16,
+                  const SizedBox(height: 10,),
+                  Text(
+                    desc,
+                    style: textTheme.headline6!.copyWith(
+                      color: ColorValue.hintColor,
                       fontWeight: FontWeight.w500,
-                      color: ColorValue.neutralColor
+                      fontSize: 14,
+                    ),
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                  const SizedBox(height: 10,),
+                  Text(
+                    NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0).format(int.parse(price)),
+                    style: textTheme.headline6!.copyWith(
+                      color: ColorValue.primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+                  Text(
+                    "Stok : $stock",
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: ColorValue.neutralColor
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
